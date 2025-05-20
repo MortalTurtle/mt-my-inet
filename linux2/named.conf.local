@@ -1,0 +1,4 @@
+zone "urfu.ru" {
+  type master;
+  file "urfu.ru";
+};

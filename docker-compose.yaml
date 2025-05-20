@@ -1,0 +1,54 @@
+services:
+  linux1:
+    container_name: linux1
+    build: ./linux1
+    command: sh -c "service ssh start && tail -F /dev/null"
+    ports:
+      - 2201:22
+    networks:
+      mynet:
+        ipv4_address: 192.168.1.11
+
+  linux2:
+    container_name: linux2
+    build: ./linux2
+    command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
+    ports:
+      - 2202:22
+    volumes:
+      - ./linux2/named.conf.local:/etc/bind/named.conf.local
+      - ./linux2/urfu.ru:/var/cache/urfu.ru
+    networks:
+      mynet:
+        ipv4_address: 192.168.1.12
+  linux3:
+    container_name: linux3
+    build: ./linux3
+    command: sh -c "service ssh start && service ssh start && tail -F /dev/null"
+    volumes:
+      - ./linux3/named.conf.options:/etc/bind/named.conf.options
+    ports:
+      - 2203:22
+    networks:
+      mynet:
+        ipv4_address: 192.168.1.13
+    dns_search: mynet
+  linux4:
+    container_name: linux4
+    build: ./linux4
+    command: sh -c "service ssh start && tail -F /dev/null"
+    ports:
+      - 2204:22
+    networks:
+      mynet:
+        ipv4_address: 192.168.1.15
+    dns: 192.168.1.13 
+
+networks:
+  mynet:
+    name: mynet
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
