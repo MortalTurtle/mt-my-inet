@@ -30,6 +30,7 @@ services:
     command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
     volumes:
       - ./linux3/named.conf.options:/etc/bind/named.conf.options
+      - ./linux3/root.hint:/usr/share/dns/root.hints
     ports:
       - 2203:22
     networks:
