@@ -1,4 +1,6 @@
-zone "urfu.ru" {
+zone "mturtle.ru" {
   type master;
-  file "urfu.ru";
+  file "/var/cache/mturtle.ru";
+  allow-transfer { 192.168.1.13; };
+  notify yes;
 };
