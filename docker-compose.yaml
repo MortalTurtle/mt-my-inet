@@ -52,7 +52,6 @@ services:
     command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
     volumes:
       - ./slave/named.conf.local:/etc/bind/named.conf.local
-      - ./slave/mturtle.ru:/var/cache/mturtle.ru
     ports:
       - 2205:22
     networks:

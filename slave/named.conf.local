@@ -1,5 +1,5 @@
 zone "mturtle.ru" {
   type slave;
-  file "/var/cache/mturtle.ru";
+  file "mturtle.ru";
   masters { 192.168.1.12; };
 };
