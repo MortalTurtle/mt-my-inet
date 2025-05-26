@@ -1,5 +1,5 @@
 .       IN      SOA     a.root-servers.mturtle. root.localhost. (
-                              1         ; Serial
+                              4         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
@@ -9,5 +9,6 @@ a.root-servers.mturtle.    A       192.168.1.11
 
 mturtle.ru.        NS      ns1.mturtle.ru.
 mturtle.ru.        NS      ns2.mturtle.ru.
+xn--p1ai.          NS      ns1.mturtle.ru.
 ns1.mturtle.ru.    A       192.168.1.12
 ns2.mturtle.ru.    A       192.168.1.13

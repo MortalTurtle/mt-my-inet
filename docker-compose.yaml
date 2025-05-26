@@ -15,12 +15,13 @@ services:
   linux2:
     container_name: linux2
     build: ./linux2
-    command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
+    command: sh -c "service ssh start && named-checkconf && service named start && rndc reload && tail -F /dev/null"
     ports:
       - 2202:22
     volumes:
       - ./linux2/named.conf.local:/etc/bind/named.conf.local
       - ./linux2/mturtle.ru:/var/cache/mturtle.ru
+      - ./linux2/xn--p1ai:/var/cache/xn--p1ai
     networks:
       mynet:
         ipv4_address: 192.168.1.12
@@ -47,12 +48,13 @@ services:
       mynet:
         ipv4_address: 192.168.1.15
     dns: 192.168.1.14 
-  slave:
-    container_name: slave
-    build: ./slave
-    command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
+  linux5:
+    container_name: linux5
+    build: ./linux5
+    command: sh -c "service ssh start && named-checkconf && service named start && rndc reload && tail -F /dev/null"
     volumes:
-      - ./slave/named.conf.local:/etc/bind/named.conf.local
+      - ./linux5/named.conf.local:/etc/bind/named.conf.local
+      - ./linux5/xn--k1ajfbd.xn--p1ai:/var/cache/xn--k1ajfbd.xn--p1ai
     ports:
       - 2205:22
     networks:
@@ -62,8 +64,7 @@ services:
 networks:
   mynet:
     name: mynet
+    driver: bridge
     ipam:
-      driver: default
       config:
         - subnet: 192.168.1.0/24
-          gateway: 192.168.1.1

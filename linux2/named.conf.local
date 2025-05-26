@@ -4,3 +4,8 @@ zone "mturtle.ru" {
   allow-transfer { 192.168.1.13; };
   notify yes;
 };
+
+zone "xn--p1ai" {
+  type master;
+  file "/var/cache/xn--p1ai";
+};

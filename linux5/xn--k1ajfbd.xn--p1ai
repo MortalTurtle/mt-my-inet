@@ -1,0 +1,12 @@
+$TTL    86400
+xn--k1ajfbd.xn--p1ai. IN  SOA ns1.xn--k1ajfbd.xn--p1ai. root.localhost. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                          86400 )       ; Negative Cache TTL
+
+
+xn--k1ajfbd.xn--p1ai. IN  NS  ns1.xn--k1ajfbd.xn--p1ai.
+xn--k1ajfbd.xn--p1ai.   IN A 192.168.1.13
+ns1.xn--k1ajfbd.xn--p1ai.  A  192.168.1.13
