@@ -20,8 +20,7 @@ services:
       - 2202:22
     volumes:
       - ./linux2/named.conf.local:/etc/bind/named.conf.local
-      - ./linux2/mturtle.ru:/var/cache/mturtle.ru
-      - ./linux2/xn--p1ai:/var/cache/xn--p1ai
+      - ./linux2/xn--p1ai:/var/cache/bind/xn--p1ai
     networks:
       mynet:
         ipv4_address: 192.168.1.12
@@ -54,7 +53,7 @@ services:
     command: sh -c "service ssh start && named-checkconf && service named start && rndc reload && tail -F /dev/null"
     volumes:
       - ./linux5/named.conf.local:/etc/bind/named.conf.local
-      - ./linux5/xn--k1ajfbd.xn--p1ai:/var/cache/xn--k1ajfbd.xn--p1ai
+      - ./linux5/xn--k1ajfbd.xn--p1ai:/var/cache/bind/xn--k1ajfbd.xn--p1ai
     ports:
       - 2205:22
     networks:

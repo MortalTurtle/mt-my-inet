@@ -1,11 +1,11 @@
 zone "mturtle.ru" {
   type master;
-  file "/var/cache/mturtle.ru";
+  file "/var/cache/bind/mturtle.ru.signed";
   allow-transfer { 192.168.1.13; };
   notify yes;
 };
 
 zone "xn--p1ai" {
   type master;
-  file "/var/cache/xn--p1ai";
+  file "/var/cache/bind/xn--p1ai";
 };

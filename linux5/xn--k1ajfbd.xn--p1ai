@@ -8,5 +8,5 @@ xn--k1ajfbd.xn--p1ai. IN  SOA ns1.xn--k1ajfbd.xn--p1ai. root.localhost. (
 
 
 xn--k1ajfbd.xn--p1ai. IN  NS  ns1.xn--k1ajfbd.xn--p1ai.
-xn--k1ajfbd.xn--p1ai.   IN A 192.168.1.13
+xn--k1ajfbd.xn--p1ai.   IN A 192.168.1.14
 ns1.xn--k1ajfbd.xn--p1ai.  A  192.168.1.13

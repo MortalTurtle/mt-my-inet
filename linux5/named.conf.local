@@ -1,10 +1,10 @@
 zone "mturtle.ru" {
   type slave;
-  file "/var/cache/mturtle.ru";
+  file "/var/cache/bind/mturtle.ru";
   masters { 192.168.1.12; };
 };
 
 zone "xn--k1ajfbd.xn--p1ai" {
   type master;
-  file "/var/cache/xn--k1ajfbd.xn--p1ai";
+  file "/var/cache/bind/xn--k1ajfbd.xn--p1ai";
 };

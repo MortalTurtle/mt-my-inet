@@ -13,4 +13,6 @@ RUN useradd --create-home --base-dir /home --shell /bin/bash debian \
     && echo "debian:qwer" | chpasswd \
     && usermod -aG sudo debian
 
+RUN chown -R bind:bind /var/cache/bind/
+
 EXPOSE 22 53
