@@ -2,41 +2,64 @@ services:
   linux1:
     container_name: linux1
     build: ./linux1
-    command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
+    command: sh -c "service ssh start 
+      && cp /tmp/keys/dsset-mturtle.ru. /var/cache/bind/dsset-mturtle.ru.
+      && cp /etc/bind/my.keys /tmp/keys/my.keys
+      && named-checkconf
+      && named-checkzone . /etc/bind/root.db
+      && service named start 
+      && rndc reload 
+      && rndc dnssec -status .
+      && tail -F /dev/null"
     ports:
       - 2201:22
     volumes:
       - ./linux1/named.conf.local:/etc/bind/named.conf.local
-      - ./linux1/root.db:/etc/bind/root.db
+      - ./linux1/named.conf.options:/etc/bind/named.conf.options
+      - ./linux1/dnssec-policy.conf:/etc/bind/dnssec-policy.conf
+      - ./keys/:/tmp/keys
     networks:
       mynet:
         ipv4_address: 192.168.1.11
+    depends_on:
+      - linux2
 
   linux2:
     container_name: linux2
     build: ./linux2
-    command: sh -c "service ssh start && named-checkconf && service named start && rndc reload && tail -F /dev/null"
+    command: sh -c "service ssh start
+      && named-checkconf
+      && cp /tmp/dsset-mturtle.ru. /tmp/keys/dsset-mturtle.ru.
+      && service named start && rndc reload && tail -F /dev/null"
     ports:
       - 2202:22
     volumes:
       - ./linux2/named.conf.local:/etc/bind/named.conf.local
-      - ./linux2/xn--p1ai:/var/cache/bind/xn--p1ai
+      - ./keys/:/tmp/keys/
     networks:
       mynet:
         ipv4_address: 192.168.1.12
   linux3:
     container_name: linux3
     build: ./linux3
-    command: sh -c "service ssh start && service named start && rndc reload && tail -F /dev/null"
+    command: sh -c "service ssh start 
+      && named-checkconf
+      && cp /tmp/keys/my.keys /etc/bind/my.keys
+      && service named start 
+      && rndc reload 
+      && tail -F /dev/null"
     volumes:
       - ./linux3/named.conf.options:/etc/bind/named.conf.options
       - ./linux3/root.hint:/usr/share/dns/root.hints
+      - ./keys/:/tmp/keys/
     ports:
       - 2203:22
     networks:
       mynet:
         ipv4_address: 192.168.1.14
     dns_search: mynet
+    depends_on:
+      - linux1
   linux4:
     container_name: linux4
     build: ./linux4
@@ -50,7 +73,11 @@ services:
   linux5:
     container_name: linux5
     build: ./linux5
-    command: sh -c "service ssh start && named-checkconf && service named start && rndc reload && tail -F /dev/null"
+    command: sh -c "service ssh start 
+      && named-checkconf 
+      && service named start 
+      && rndc reload 
+      && tail -F /dev/null"
     volumes:
       - ./linux5/named.conf.local:/etc/bind/named.conf.local
       - ./linux5/xn--k1ajfbd.xn--p1ai:/var/cache/bind/xn--k1ajfbd.xn--p1ai

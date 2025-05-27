@@ -1,5 +1,6 @@
+$TTL    86400
 .       IN      SOA     a.root-servers.mturtle. root.localhost. (
-                              4         ; Serial
+                              5         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
@@ -12,3 +13,4 @@ mturtle.ru.        NS      ns2.mturtle.ru.
 xn--p1ai.          NS      ns1.mturtle.ru.
 ns1.mturtle.ru.    A       192.168.1.12
 ns2.mturtle.ru.    A       192.168.1.13
+$INCLUDE "/var/cache/bind/dsset-mturtle.ru."

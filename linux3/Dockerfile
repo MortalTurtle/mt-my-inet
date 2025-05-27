@@ -11,6 +11,7 @@ RUN apt update && apt install -y openssh-server bind9 dnsutils iputils-ping loca
 
 RUN useradd --create-home --base-dir /home --shell /bin/bash debian \
     && echo "debian:qwer" | chpasswd \
-    && usermod -aG sudo debian
+    && usermod -aG sudo debian \
+    && echo "include \"/etc/bind/my.keys\";" >> /etc/bind/bind.keys
 
 EXPOSE 22 53
