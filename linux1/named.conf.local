@@ -1,8 +1,6 @@
 zone "." {
   type master;
-  file "/etc/bind/root.db";
-  dnssec-policy "split-keys";
+  file "/var/cache/bind/root.db";
+  auto-dnssec maintain;
   inline-signing yes;
 };
-
-include "/etc/bind/dnssec-policy.conf";

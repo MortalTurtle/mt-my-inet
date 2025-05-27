@@ -1,6 +1,6 @@
 zone "mturtle.ru" {
   type slave;
-  file "/var/cache/bind/mturtle.ru";
+  file "/var/cache/bind/mturtle.ru.signed";
   masters { 192.168.1.12; };
 };
 

@@ -9,7 +9,7 @@ RUN apt update && apt install -y openssh-server bind9 dnsutils iputils-ping loca
     && sed -i 's/#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config \
     && mkdir -p /run/sshd
 
-COPY ./root.db /etc/bind/root.db
+COPY ./root.db /var/cache/bind/root.db
 
 RUN useradd --create-home --base-dir /home --shell /bin/bash debian \
     && echo "debian:qwer" | chpasswd \
@@ -21,6 +21,7 @@ RUN dnssec-keygen -a RSASHA512 -K /var/cache/bind/ -f KSK -n ZONE . \
     && sed -i -e 's/.*IN DNSKEY 257 3 10 /trust-anchors { \n    . static-key 257 3 10 \"/g' /etc/bind/my.keys \
     && sed -i -e 's/=/=\";\n};/g' /etc/bind/my.keys \
     && dnssec-keygen -a RSASHA512 -K /var/cache/bind/ -n ZONE . \
+    && echo "include \"/tmp/keys/my.keys\";" >> /etc/bind/bind.keys \
     && chown -R bind:bind /var/cache/bind/
 
 EXPOSE 22 53

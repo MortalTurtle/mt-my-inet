@@ -6,7 +6,7 @@ services:
       && cp /tmp/keys/dsset-mturtle.ru. /var/cache/bind/dsset-mturtle.ru.
       && cp /etc/bind/my.keys /tmp/keys/my.keys
       && named-checkconf
-      && named-checkzone . /etc/bind/root.db
+      && named-checkzone . /var/cache/bind/root.db
       && service named start 
       && rndc reload 
       && rndc dnssec -status .
@@ -29,12 +29,14 @@ services:
     build: ./linux2
     command: sh -c "service ssh start
       && named-checkconf
+      && cp /tmp/mturtle.keys /tmp/keys/mturtle.keys
       && cp /tmp/dsset-mturtle.ru. /tmp/keys/dsset-mturtle.ru.
       && service named start && rndc reload && tail -F /dev/null"
     ports:
       - 2202:22
     volumes:
       - ./linux2/named.conf.local:/etc/bind/named.conf.local
+      - ./linux2/named.conf.options:/etc/bind/named.conf.options
       - ./keys/:/tmp/keys/
     networks:
       mynet:
@@ -60,6 +62,7 @@ services:
     dns_search: mynet
     depends_on:
       - linux1
+    dns: 192.168.1.14 
   linux4:
     container_name: linux4
     build: ./linux4
@@ -80,12 +83,15 @@ services:
       && tail -F /dev/null"
     volumes:
       - ./linux5/named.conf.local:/etc/bind/named.conf.local
+      - ./linux5/named.conf.options:/etc/bind/named.conf.options
       - ./linux5/xn--k1ajfbd.xn--p1ai:/var/cache/bind/xn--k1ajfbd.xn--p1ai
     ports:
       - 2205:22
     networks:
       mynet:
         ipv4_address: 192.168.1.13
+    depends_on:
+      - linux2
 
 networks:
   mynet:

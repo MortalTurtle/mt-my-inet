@@ -13,6 +13,7 @@ RUN useradd --create-home --base-dir /home --shell /bin/bash debian \
     && echo "debian:qwer" | chpasswd \
     && usermod -aG sudo debian
 
-RUN chown -R bind:bind /var/cache/bind/
+RUN chown -R bind:bind /var/cache/bind/ \
+    && echo "include \"/tmp/keys/my.keys\";" >> /etc/bind/bind.keys
 
 EXPOSE 22 53

@@ -26,6 +26,7 @@ RUN dnssec-keygen -a RSASHA512 -K /var/cache/bind/ -f KSK -n ZONE mturtle.ru \
     && cd /var/cache/bind \
     && dnssec-signzone -K /var/cache/bind/ -S mturtle.ru \
     && dnssec-dsfromkey -f mturtle.ru > /tmp/dsset-mturtle.ru. \
+    && echo "include \"/tmp/keys/my.keys\";" >> /etc/bind/bind.keys \
     && chown -R bind:bind /var/cache/bind/
 
 EXPOSE 22 53
